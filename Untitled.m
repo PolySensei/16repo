@@ -1,3 +1,5 @@
+
+%DEFINITIONS
 propulseurMasse = 200;
 propulseurLongueur = 0.3;
 propulseurRayon = 0.75;
@@ -18,7 +20,7 @@ coneAvantMasse  = 500;
 coneAvantlongueur = 1;
 coneAvantRayon = 1.5;
 
-
+%Centre de masse
 propulseurRot = Rotz(-pi/4);
 propulseurCentreMasse = [-propulseurLongueur/2,0,0]';
 propulseurCentreMasse = propulseurRot*propulseurCentreMasse;
@@ -41,7 +43,7 @@ centreMasseGlobal = centreMasseGlobal + (coneAvantMasse*coneAvantCentreMasse);
 
 centreMasseGlobal = centreMasseGlobal/masseTotal
 
-
+%Inertie
 propulseurInertie = InertieCylindreCreux (propulseurMasse, propulseurRayon, propulseurLongueur);
 propulseurInertie = propulseurRot*(Roty(-pi/2)*propulseurInertie*Roty(-pi/2)')*propulseurRot';
 propulseurInertie = momentDeplacementInertie( propulseurInertie, propulseurMasse, centreMasseGlobal, propulseurCentreMasse );
@@ -64,6 +66,7 @@ coneAvantInertie = momentDeplacementInertie(coneAvantInertie, coneAvantMasse, ce
 
 inertieGlobale = propulseurInertie+coneArrierreInertie+cylindreArriereInertie+cylindreAvantInertie+coneAvantInertie
 
+%application force sans mouvement
 force = [1000 -1000 0]';
 forceLocation =[0 0 0 ]';
 
@@ -71,12 +74,63 @@ torque = cross ((forceLocation-centreMasseGlobal) ,force)
 
 accelerationAngulaire = inv(inertieGlobale) * torque
 
+%application force avec mouvement
 vitesseAngulaire = [0 0.1 0]';
 vitesseAngulaireMat = wMat(vitesseAngulaire);
 
-test = vitesseAngulaireMat * inertieGlobale * vitesseAngulaire
-
 accelerationAngulaireEnMouvement = inv(inertieGlobale)* (torque - vitesseAngulaireMat * inertieGlobale * vitesseAngulaire)
+
+%THIS IS A COMMENT AND THE START OF THE SECOND PHASE.
+rotationMatrix = Roty(-10*2*pi/360);
+
+%centre masse
+propulseurCentreMasseRot = propulseurCentreMasse;
+coneArriereCentreMasseRot = rotationMatrix*coneArriereCentreMasse;
+cylindreArriereCentreMasseRot = rotationMatrix*cylindreArriereCentreMasse;
+cylindreAvantCentreMasseRot = rotationMatrix*cylindreAvantCentreMasse;
+coneAvantCentreMasseRot = rotationMatrix*coneAvantCentreMasse;
+
+centreMasseGlobalRot = propulseurCentreMasseRot*propulseurMasse;
+centreMasseGlobalRot = centreMasseGlobalRot + (coneArriereMasse*coneArriereCentreMasseRot);
+centreMasseGlobalRot = centreMasseGlobalRot + (cylindreArriereMasse*cylindreArriereCentreMasseRot);
+centreMasseGlobalRot = centreMasseGlobalRot + (cylindreAvantMasse*cylindreAvantCentreMasseRot);
+centreMasseGlobalRot = centreMasseGlobalRot + (coneAvantMasse*coneAvantCentreMasseRot);
+
+centreMasseGlobalRot = centreMasseGlobalRot/masseTotal
+
+%inertie
+
+propulseurInertieRot = InertieCylindreCreux (propulseurMasse, propulseurRayon, propulseurLongueur);
+propulseurInertieRot = rotationMatrix*(propulseurRot*(Roty(-pi/2)*propulseurInertieRot*Roty(-pi/2)')*propulseurRot')*rotationMatrix';
+propulseurInertieRot = momentDeplacementInertie( propulseurInertieRot, propulseurMasse, centreMasseGlobalRot, propulseurCentreMasseRot );
+
+coneArrierreInertieRot = InertieCone(coneArriereMasse, coneArriereRayon, coneArriereLongueur);
+coneArrierreInertieRot = rotationMatrix*(Roty(-pi/2)*coneArrierreInertieRot*Roty(-pi/2)')*rotationMatrix';
+coneArrierreInertieRot = momentDeplacementInertie(coneArrierreInertieRot, coneArriereMasse, centreMasseGlobalRot, coneArriereCentreMasseRot);
+
+cylindreArriereInertieRot = InertieCylindrePlein(cylindreArriereMasse, cylindreArriereRayon, cylindreArriereLongueur);
+cylindreArriereInertieRot = rotationMatrix*(Roty(-pi/2)*cylindreArriereInertieRot*Roty(-pi/2)')*rotationMatrix';
+cylindreArriereInertieRot = momentDeplacementInertie(cylindreArriereInertieRot, cylindreArriereMasse, centreMasseGlobalRot, cylindreArriereCentreMasseRot);
+
+cylindreAvantInertieRot = InertieCylindreCreux(cylindreAvantMasse, cylindreAvantRayon, cylindreAvantLongueur);
+cylindreAvantInertieRot = rotationMatrix*(Roty(-pi/2)*cylindreAvantInertieRot*Roty(-pi/2)')*rotationMatrix';
+cylindreAvantInertieRot =  momentDeplacementInertie(cylindreAvantInertieRot, cylindreAvantMasse, centreMasseGlobalRot, cylindreAvantCentreMasseRot);
+
+coneAvantInertieRot = InertieCone(coneAvantMasse, coneAvantRayon, coneAvantlongueur);
+coneAvantInertieRot = rotationMatrix*(Roty(pi/2)*coneAvantInertieRot*Roty(pi/2)')*rotationMatrix';
+coneAvantInertieRot = momentDeplacementInertie(coneAvantInertieRot, coneAvantMasse, centreMasseGlobalRot, coneAvantCentreMasseRot);
+
+inertieGlobaleRot = propulseurInertieRot+coneArrierreInertieRot+cylindreArriereInertieRot+cylindreAvantInertieRot+coneAvantInertieRot
+
+%application force sans mouvement
+torqueRot = cross ((forceLocation - centreMasseGlobalRot) ,force)
+
+accelerationAngulaireRot = inv(inertieGlobaleRot) * torqueRot
+
+%application force avec mouvement
+accelerationAngulaireEnMouvementRot = inv(inertieGlobaleRot)* (torqueRot - vitesseAngulaireMat * inertieGlobaleRot * vitesseAngulaire)
+
+
 
 
 
