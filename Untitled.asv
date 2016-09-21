@@ -64,19 +64,6 @@ coneAvantInertie = momentDeplacementInertie(coneAvantInertie, coneAvantMasse, ce
 
 inertieGlobale = propulseurInertie+coneArrierreInertie+cylindreArriereInertie+cylindreAvantInertie+coneAvantInertie
 
-force = [1000 -1000 0]';
-forceLocation =[0 0 0 ]';
-
-torque = cross ((forceLocation-centreMasseGlobal) ,force)
-
-accelerationAngulaire = inv(inertieGlobale) * torque
-
-vitesseAngulaire = [0 0.1 0]';
-vitesseAngulaireMat = wMat(vitesseAngulaire);
-
-test = vitesseAngulaireMat * inertieGlobale * vitesseAngulaire
-
-accelerationAngulaireEnMouvement = inv(inertieGlobale)* (torque - vitesseAngulaireMat * inertieGlobale * vitesseAngulaire)
-
-
-
+fir
+forceDirection = [1,-1,0];
+forceLocation =[0 0 0 ]
