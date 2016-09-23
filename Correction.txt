@@ -1,0 +1,20 @@
+
+1.untitled.m line 28: 
+
+La pointe n'est pas a (0,0,0) C'est à une profondeur -20 dans la direction Z. Donc le centre de masse devrait etre (h/4,0,-20) ? C'est la meme chose pour le reste des cylindres et des cones je pense. 
+
+2. untitled.m line 52: 
+
+La formule données dans les cours sont pour des solides aligné avec l'axe des z. On veut une rotation dans la direction Pi/2 (counterclockwise) pas -Pi/2(clockwise) pour avoir le sommet du cone vers la gauche par exemple. Le cone avant est -pi/2 pas pi/2. Basically on a inversé nos angles. 
+
+3. Untitlled.m line 71: 
+
+Location of force impact [ 0,0,-20] pas à l'orgine
+
+4. Untitled.m line 79
+
+Pas une erreur mais à quoi sert la fonction wMat ? C'est pour transformer en matrice 3X3 ?
+
+5. meme erreur que dans numero 2 pour calculer l'inertie apres la ration de 10 degrees 
+
+
