@@ -22,16 +22,16 @@ coneAvantRayon = 1.5;
 
 %Centre de masse
 propulseurRot = Rotz(-pi/4);
-propulseurCentreMasse = [-propulseurLongueur/2,0,0]';
+propulseurCentreMasse = [-propulseurLongueur/2 0 -20]';
 propulseurCentreMasse = propulseurRot*propulseurCentreMasse;
 
-coneArriereCentreMasse = [coneArriereLongueur-coneArriereLongueur/4 0 0]';
+coneArriereCentreMasse = [coneArriereLongueur-coneArriereLongueur/4 0 -20]';
 
-cylindreArriereCentreMasse = [coneArriereLongueur+cylindreArriereLongueur/2 0 0]';
+cylindreArriereCentreMasse = [coneArriereLongueur+cylindreArriereLongueur/2 0 -20]';
 
-cylindreAvantCentreMasse = [coneArriereLongueur+cylindreArriereLongueur+cylindreAvantLongueur/2 0 0]';
+cylindreAvantCentreMasse = [coneArriereLongueur+cylindreArriereLongueur+cylindreAvantLongueur/2 0 -20]';
 
-coneAvantCentreMasse = [coneArriereLongueur+cylindreArriereLongueur+cylindreAvantLongueur+coneAvantlongueur/4 0 0]';
+coneAvantCentreMasse = [coneArriereLongueur+cylindreArriereLongueur+cylindreAvantLongueur+coneAvantlongueur/4 0 -20]';
 
 masseTotal = propulseurMasse+coneArriereMasse+cylindreArriereMasse+cylindreAvantMasse+coneAvantMasse;
 
@@ -68,7 +68,7 @@ inertieGlobale = propulseurInertie+coneArrierreInertie+cylindreArriereInertie+cy
 
 %application force sans mouvement
 force = [1000 -1000 0]';
-forceLocation =[0 0 0 ]';
+forceLocation =[0 0 -20 ]';
 
 torque = cross ((forceLocation-centreMasseGlobal) ,force)
 
@@ -85,10 +85,28 @@ rotationMatrix = Roty(-10*2*pi/360);
 
 %centre masse
 propulseurCentreMasseRot = propulseurCentreMasse;
-coneArriereCentreMasseRot = rotationMatrix*coneArriereCentreMasse;
-cylindreArriereCentreMasseRot = rotationMatrix*cylindreArriereCentreMasse;
-cylindreAvantCentreMasseRot = rotationMatrix*cylindreAvantCentreMasse;
-coneAvantCentreMasseRot = rotationMatrix*coneAvantCentreMasse;
+coneArriereCentreMasseRot = coneArriereCentreMasse;
+cylindreArriereCentreMasseRot = cylindreArriereCentreMasse;
+cylindreAvantCentreMasseRot = cylindreAvantCentreMasse;
+coneAvantCentreMasseRot = coneAvantCentreMasse;
+
+%Ajustement position pour la rotation
+coneArriereCentreMasseRot(3) = 0.0;
+cylindreArriereCentreMasseRot(3) = 0.0;
+cylindreAvantCentreMasseRot(3) = 0.0;
+coneAvantCentreMasseRot(3) = 0.0;
+
+%Rotation
+coneArriereCentreMasseRot = rotationMatrix*cylindreArriereCentreMasseRot;
+cylindreArriereCentreMasseRot = rotationMatrix*cylindreArriereCentreMasseRot;
+cylindreAvantCentreMasseRot = rotationMatrix*cylindreAvantCentreMasseRot;
+coneAvantCentreMasseRot = rotationMatrix*cylindreAvantCentreMasseRot;
+
+%Réajustement position
+coneArriereCentreMasseRot(3) = coneArriereCentreMasseRot(3)-20.0;
+cylindreArriereCentreMasseRot(3) = cylindreArriereCentreMasseRot(3)-20.0;
+cylindreAvantCentreMasseRot(3) = cylindreAvantCentreMasseRot(3)-20.0;
+coneAvantCentreMasseRot(3) = coneAvantCentreMasseRot(3)-20.0;
 
 centreMasseGlobalRot = propulseurCentreMasseRot*propulseurMasse;
 centreMasseGlobalRot = centreMasseGlobalRot + (coneArriereMasse*coneArriereCentreMasseRot);
