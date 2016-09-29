@@ -78,7 +78,8 @@ accelerationAngulaire = inv(inertieGlobale) * torque
 vitesseAngulaire = [0 0.1 0]';
 vitesseAngulaireMat = wMat(vitesseAngulaire);
 
-accelerationAngulaireEnMouvement = inv(inertieGlobale)* (torque - vitesseAngulaireMat * inertieGlobale * vitesseAngulaire)
+L = inertieGlobale * vitesseAngulaire;
+accelerationAngulaireEnMouvement = inv(inertieGlobale)* (torque + cross(L , vitesseAngulaire))
 
 %THIS IS A COMMENT AND THE START OF THE SECOND PHASE.
 rotationMatrix = Roty(-10*2*pi/360);
@@ -146,7 +147,8 @@ torqueRot = cross ((forceLocation - centreMasseGlobalRot) ,force)
 accelerationAngulaireRot = inv(inertieGlobaleRot) * torqueRot
 
 %application force avec mouvement
-accelerationAngulaireEnMouvementRot = inv(inertieGlobaleRot)* (torqueRot - vitesseAngulaireMat * inertieGlobaleRot * vitesseAngulaire)
+LRot = inertieGlobaleRot * vitesseAngulaire;
+accelerationAngulaireEnMouvementRot = inv(inertieGlobaleRot)* (torqueRot + cross(LRot , vitesseAngulaire))
 
 
 
