@@ -1,0 +1,78 @@
+>> Untitled
+
+centreMasseGlobal =
+
+    2.9697
+    0.0053
+  -20.0000
+
+
+inertieGlobale =
+
+   1.0e+04 *
+
+    0.3665    0.0038   -0.0000
+    0.0038    1.6105    0.0000
+   -0.0000    0.0000    1.6079
+
+
+torque =
+
+           0
+           0
+        2975
+
+
+accelerationAngulaire =
+
+    0.0000
+   -0.0000
+    0.1850
+
+
+accelerationAngulaireEnMouvement =
+
+    0.0000
+   -0.0000
+    0.1850
+
+
+centreMasseGlobalRot =
+
+    2.9053
+    0.0053
+  -19.3876
+
+
+inertieGlobaleRot =
+
+   1.0e+03 *
+
+    4.2897    0.0369   -1.4720
+    0.0369    9.7497    0.0082
+   -1.4720   -0.0177    9.0995
+
+
+torqueRot =
+
+   1.0e+03 *
+
+   -0.6124
+   -0.6124
+    2.9106
+
+
+accelerationAngulaireRot =
+
+   -0.0344
+   -0.0629
+    0.3142
+
+
+accelerationAngulaireEnMouvementRot =
+
+   -0.0343
+   -0.0629
+    0.3142
+
+>> 
