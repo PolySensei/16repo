@@ -2,7 +2,7 @@ function [ coup,vbf,t,x,y,z ] = coup( option,xy0,vb0,wb0)
 %coup Summary of this function goes here
 %   Detailed explanation goes here
 
-gravity = [0 0 -8.8]';
+gravity = [0 0 -9.8]';
 
 
     function a = accel(t)
