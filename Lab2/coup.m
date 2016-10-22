@@ -36,7 +36,7 @@ if option == 1
            coup = 2;
            return;
        end
-       currentT = currentT+0.02;
+       currentT = currentT+0.0002;
     end
     
     currentPos = position(acceleration, vb0, p0, tTotal);
@@ -49,7 +49,7 @@ if option == 1
 else 
     
     
-    delta = 0.02;
+    delta = 0.0002;
         
     currentPos = [xy0' r+0.00001]';
     currentSpeed = vb0;
