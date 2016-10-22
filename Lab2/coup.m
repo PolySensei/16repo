@@ -4,13 +4,6 @@ function [ coup,vbf,t,x,y,z ] = coup( option ,xy0,vb0,wb0)
 r = 21.35/1000;
 gravity = [0 0 -9.8]';
 
-    function a = accel(t)
-        if option ==0
-            a = gravity;
-        end
-    end
-
-
     function v = speed(a, v0, t)
         v = v0+t*a;
     end
@@ -19,9 +12,9 @@ gravity = [0 0 -9.8]';
         p = p0 + v0*t + a/2*t^2;
     end
 
-if option == 0
+if option == 1
     speedZInitial = vb0(3);
-    acceleration = accel(0);
+    acceleration = gravity;
     tTotal = 2*abs(speedZInitial /acceleration(3));
     currentT = 0;
     p0 = [xy0' r]';
@@ -53,7 +46,9 @@ if option == 0
     z = [z currentPos(3)];
     coup = BallLocation(currentPos);
     vbf = speed(acceleration,vb0,tTotal);
-elseif option == 1
+else 
+    
+    
     delta = 0.02;
         
     currentPos = [xy0' r+0.00001]';
@@ -67,7 +62,12 @@ elseif option == 1
     
     while currentPos(3)>r && BallLocation(currentPos)~= 2
        currentT = currentT+delta;
-       currentSpeed = RungeKutta ( currentSpeed, wb0 , delta , @AccelTwo);
+       if(option == 2)
+            currentSpeed = RungeKutta ( currentSpeed, wb0 , delta , @AccelTwo);
+       else
+            currentSpeed = RungeKutta ( currentSpeed, wb0 , delta , @AccelThree);
+       end
+
        currentPos = currentPos + currentSpeed*delta; 
        
        t= [t currentT];
