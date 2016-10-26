@@ -11,7 +11,7 @@ function varargout = GUI(varargin)
 %
 %      GUI('Property','Value',...) creates a new GUI or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before GUI_OpeningFcn gets called.  An
+%      applied to th e GUI before GUI_OpeningFcn gets called.  An
 %      unrecognized property name or invalid value makes property application
 %      stop.  All inputs are passed to GUI_OpeningFcn via varargin.
 %
