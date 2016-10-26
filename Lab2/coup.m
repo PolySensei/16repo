@@ -81,17 +81,20 @@ else
        currentPos = currentPos + currentSpeed*delta; 
        
     end
-    lastDelta = -(z(end)-r)/currentSpeed(3);
-    currentPos = [x(end) y(end) z(end)]' + currentSpeed*lastDelta; 
-    currentT = currentT-delta+lastDelta;
+    if BallLocation(currentPos)~= 2
+      lastDelta = -(z(end)-r)/currentSpeed(3);
+      currentPos = [x(end) y(end) z(end)]' + currentSpeed*lastDelta; 
+      currentT = currentT-delta+lastDelta;
+    end
     
     t=[t currentT];
     x=[x currentPos(1)];
     y=[y currentPos(2)];
     z=[z currentPos(3)];
-
+    
     coup = BallLocation(currentPos);
     vbf = currentSpeed;
+    
 end
 end
 
