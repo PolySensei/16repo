@@ -1,6 +1,6 @@
 function [ accel ] = AccelThree(v, w)
 %ACCELTWO Retourne l'acceleration en option 3. 
-%   Detailed explanation goes here
+%   Gravity + friction + magnus
     v ;
     w;
     m = 45.9/1000;
