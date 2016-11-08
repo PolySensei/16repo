@@ -1,10 +1,8 @@
 function [ result ] = CollisionDetection( posCube, posAxes, posSphere )
-%COLLISIONDETECTION ret = 1 si il y a une collision mais de précision
+%COLLISIONDETECTION ret = 1 si il y a une collision mais de prï¿½cision
 %insatisfesante
 %   ret = 0 si pas de collision
-% ret = 2 si collision et précision satisfesante.
-diffVecNormalizer = (posCube-posSphere)/norm(posCube-posSphere);
-circlePosClose = posSphere;
+% ret = 2 si collision et prï¿½cision satisfesante.
 sphereRadius = 0.02;
 result = -1;
 for m = 0:5

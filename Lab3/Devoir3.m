@@ -1,4 +1,4 @@
-function [Resultat x y z xb yb zb c]= Devoir3( vbloci,avbloci,tl,vballei )
+function [Resultat t]= Devoir3( vbloci,avbloci,tl,vballei )
 %DEVOIR3 Fonction principale du devoir
 %   Detailed explanation goes here
   accel = [0 0 -9.8];
@@ -21,33 +21,21 @@ function [Resultat x y z xb yb zb c]= Devoir3( vbloci,avbloci,tl,vballei )
   firstHit = 0;
   Resultat = 0;
   
-    x =[];
-    y =[];
-    z =[];
-    xb =[];
-    yb =[];
-    zb =[];
-  c = []
+    t =[];
   while deltaT > 0.0000001
+      t=[t currentT];
       hit = 0;
       [spherePos] = gravity(spherePosI, currentT-tI, sphereSpeedI);
       [cubePos] = gravity(cubePosInit, currentT, cubeSpeedInit);
       
-      x =[x cubePos(1)];
-      y =[y cubePos(2)];
-      z =[z cubePos(3)];
-      xb =[xb spherePos(1)];
-      yb =[yb spherePos(2)];
-      zb =[zb spherePos(3)];
       if(withinMaxRadius == 0)
           [distsq]  = DistSq( spherePos, cubePos);
-          c = [c distsq];
           if(distsq < maxRadiusTotal*maxRadiusTotal)
-              withinMaxRadius = 1
+              withinMaxRadius = 1;
           end
       else
-          [coinPos, axesPos] = rotation(  avbloci, currentT);
-          [ ret ] = CollisionDetection( cubePos, coinPos, axesPos, spherePos );
+          [axesPos] = rotation(  avbloci, currentT);
+          [ ret ] = CollisionDetection( cubePos, axesPos, spherePos );
           if(ret == 1)
               hit = 1;
               firstHit = 1;
