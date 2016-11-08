@@ -1,16 +1,8 @@
-function [ coup vbf t x y z ] = coup( option,xy0,vb0,wb0)
+function [ coup,vbf,t,x,y,z ] = coup( option ,xy0,vb0,wb0)
 %coup Summary of this function goes here
 %   Detailed explanation goes here
-
-gravity = [0 0 9.8]';
-
-
-    function a = accel(t)
-        if option ==0
-            a = gravity;
-        end
-    end
-
+r = 21.35/1000;
+gravity = [0 0 -9.8]';
 
     function v = speed(a, v0, t)
         v = v0+t*a;
@@ -20,26 +12,72 @@ gravity = [0 0 9.8]';
         p = p0 + v0*t + a/2*t^2;
     end
 
-if option == 0
+if option == 1
     speedZInitial = vb0(3);
-    acceleration = accel(0);
-    tTotal = abs(speedZInitial /acceleration(3));
-    pos = xy0 + vb0*tTotal + acceleration*tTotal^2;
+    acceleration = gravity;
+    tTotal = 2*abs(speedZInitial /acceleration(3));
     currentT = 0;
-
+    p0 = [xy0' r]';
+    
+    t=[];
+    x=[];
+    y=[];
+    z=[];
+    
     while currentT<tTotal
-       currentPos = position(acceleration, vb0, xy0, currentT);
+       currentPos = position(acceleration, vb0, p0, currentT);
        t= [t currentT];
        x = [x currentPos(1)];
        y = [y currentPos(2)];
        z = [z currentPos(3)];
 
        if BallLocation(currentPos)==2
-           vbf = 
+           vbf = speed(acceleration,vb0,currentT);
+           coup = 2;
            return;
        end
+       currentT = currentT+0.0002;
     end
-   
+    
+    currentPos = position(acceleration, vb0, p0, tTotal);
+    t = [t tTotal];
+    x = [x currentPos(1)];
+    y = [y currentPos(2)];
+    z = [z currentPos(3)];
+    coup = BallLocation(currentPos);
+    vbf = speed(acceleration,vb0,tTotal);
+else 
+    
+    
+    delta = 0.0002;
+        
+    currentPos = [xy0' r]';
+    currentSpeed = vb0;
+    currentT = 0;
 
+    t=[];
+    x=[];
+    y=[]'
+    z=[];;
+    while currentPos(3)>=r && BallLocation(currentPos)~= 2
+        
+      t=[t currentT];
+      x=[x currentPos(1)];
+      y=[y currentPos(2)];
+      z=[z currentPos(3)];
+       currentT = currentT+delta;
+       if(option == 2)
+            currentSpeed = RungeKutta ( currentSpeed, wb0 , delta , @AccelTwo);
+       else
+            currentSpeed = RungeKutta ( currentSpeed, wb0 , delta , @AccelThree);
+       end
+
+       currentPos = currentPos + currentSpeed*delta; 
+       
+    end
+    
+    coup = BallLocation(currentPos);
+    vbf = currentSpeed;
+end
 end
 
