@@ -1,7 +1,7 @@
 function [Resultat t]= Devoir3( vbloci,avbloci,tl,vballei )
 %DEVOIR3 Fonction principale du devoir
 %   Detailed explanation goes here
-  accel = [0 0 -9.8];
+  accel = [0 0 -9.8]';
   arretCube = 0.08;
   
   cubePosInit = [3 3 1]';
@@ -63,6 +63,8 @@ function [Resultat t]= Devoir3( vbloci,avbloci,tl,vballei )
           currentT = currentT - deltaT;
       end
   end
+  
+  %resolution collision
  
 
 end

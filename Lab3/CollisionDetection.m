@@ -3,6 +3,8 @@ function [ result, pointCollision, normalCollision] = CollisionDetection( posCub
 %insatisfesante
 %   ret = 0 si pas de collision
 % ret = 2 si collision et pr�cision satisfesante.
+% pointCollision point de collision
+% normalCollision, la normale de la collision, de direction cube -> sphere
 sphereRadius = 0.02;
 result = -1;
 
@@ -45,7 +47,7 @@ if result~=0
         if ret == 0
             result= 2;
             pointCollision = currentCoin;
-            normalCollision = normalVec;
+            normalCollision = -normalVec;
             break;
         end
         directions = [0 0 0];
@@ -77,22 +79,22 @@ if result~=0
             ligneB = cross(ligneA,deltaVec);
             ligneB = ligneB/norm(ligneB);
             normalVec = cross(ligneA,ligneB);
-            normalVec = normalVec/norm(normalVec)
+            normalVec = normalVec/norm(normalVec);
             spherePointA = posSphere +normalVec* sphereRadius;
             spherePointB = posSphere -normalVec* sphereRadius;
             
-            ret = planeSide(coinPosA, normalVec, spherePointA)
-            ret2 = planeSide(coinPosA, normalVec, spherePointB)
-            ret3 = planeSide(coinPosA, normalVec, posCube)
+            ret = planeSide(coinPosA, normalVec, spherePointA);
+            ret2 = planeSide(coinPosA, normalVec, spherePointB);
+            ret3 = planeSide(coinPosA, normalVec, posCube);
             if(ret==0 && ret2~=ret3)
                 result=2;
                 pointCollision = spherePointA;
-                normalCollision = normalVec;
+                normalCollision = -normalVec;
                 break;
             elseif(ret2==0 && ret~=ret3)
                 result=2;
                 pointCollision = spherePointA;
-                normalCollision = normalVec;
+                normalCollision = -normalVec;
                 break;
             elseif(ret2==ret && ret~=ret3)
                 result=0;
