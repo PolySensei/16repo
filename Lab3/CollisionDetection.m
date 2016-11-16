@@ -1,4 +1,4 @@
-function [ result, pointCollision, normalCollision] = CollisionDetection( posCube, posAxes, posSphere )
+function [ result, pointCollision, normalCollision] = CollisionDetection( posCube, posAxes, posSphere)
 %COLLISIONDETECTION ret = 1 si il y a une collision mais de pr�cision
 %insatisfesante
 %   ret = 0 si pas de collision
