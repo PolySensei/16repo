@@ -22,22 +22,38 @@ function [Resultat blocf ballef Post]= Devoir3( vbloci,avbloci,tl,vballei )
   Resultat = 0;
   Post = [0 3 3 1 0 0 2];
     
-    
+  cubeHitBeforeThrow=0;
   %pour recolter les positions du bloc avant le lance de la balle
   spherePos = [0 0 2]';
-  while currentT < tI
+  while currentT < tI && deltaT > 0.0000001
       hit = 0;
 
       [cubePos cubeV] = gravity(cubePosInit, currentT, cubeSpeedInit);
       
       
-      Post = vertcat(Post,  [currentT cubePos' spherePos']);
+     [axesPos] = rotation(  avbloci, currentT);
+     
+      if(CollisionDetectionGround( cubePos, axesPos) ==1)
+          Resultat =1;
+          firstHit = 1;
+          hit = 1;
+          cubeHitBeforeThrow=1;
+      end
       
-      currentT = currentT + deltaT;
+      if(firstHit == 1 && hit == 0)
+          deltaT = deltaT/2;
+      end
+      
+      if(hit == 0)
+          Post = vertcat(Post,  [currentT cubePos' spherePos']);
+          currentT = currentT + deltaT;
+      else
+          currentT = currentT - deltaT;
+      end
   end
   
   currentT = tI;  
-  while deltaT > 0.0000001
+  while deltaT > 0.0000001 && cubeHitBeforeThrow == 0
       hit = 0;
       [spherePos sphereV] = gravity(spherePosI, currentT-tI, sphereSpeedI);
       [cubePos cubeV] = gravity(cubePosInit, currentT, cubeSpeedInit);
@@ -73,7 +89,7 @@ function [Resultat blocf ballef Post]= Devoir3( vbloci,avbloci,tl,vballei )
           %break;
       end
       
-      if(firstHit == 1)
+      if(firstHit == 1  && hit == 0)
           deltaT = deltaT/2;
       end
       
@@ -85,6 +101,10 @@ function [Resultat blocf ballef Post]= Devoir3( vbloci,avbloci,tl,vballei )
       end
   end
   Post = vertcat(Post,  [currentT cubePos' spherePos']);
+  
+  if(cubeHitBeforeThrow==1)
+      sphereV = spherePosI;
+  end
   %resolution collision
   if(Resultat == 0)
      [ vfBloc, vfaBloc, vfBalle, vfaBalle] = CollisionImpulsion( normalCollision, cubeV, sphereV, avbloci, cubePos, spherePos, pointCollision, currentT );

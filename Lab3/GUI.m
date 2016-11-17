@@ -351,9 +351,9 @@ else
     set(handles.ret, 'String', 'Balle a touché le sol!');
 end
 
-Tf1 = Post(end, 1)
-posBlocf = Post(end, 2:4)
-posBallef = Post(end, 5:7)
+Tf1 = Post(end, 1);
+posBlocf = Post(end, 2:4);
+posBallef = Post(end, 5:7);
 
 set(handles.ballef, 'Data', ballef);
 set(handles.blocf, 'Data', blocf);
