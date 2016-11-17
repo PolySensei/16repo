@@ -21,13 +21,11 @@ function [Resultat blocf ballef Post]= Devoir3( vbloci,avbloci,tl,vballei )
   firstHit = 0;
   Resultat = 0;
   Post = [0 3 3 1 0 0 2];
-    t =[];
     
     
   %pour recolter les positions du bloc avant le lance de la balle
   spherePos = [0 0 2]';
   while currentT < tI
-      t=[t currentT];
       hit = 0;
 
       [cubePos cubeV] = gravity(cubePosInit, currentT, cubeSpeedInit);
@@ -40,13 +38,10 @@ function [Resultat blocf ballef Post]= Devoir3( vbloci,avbloci,tl,vballei )
   
   currentT = tI;  
   while deltaT > 0.0000001
-      t=[t currentT];
       hit = 0;
       [spherePos sphereV] = gravity(spherePosI, currentT-tI, sphereSpeedI);
       [cubePos cubeV] = gravity(cubePosInit, currentT, cubeSpeedInit);
       
-      
-      Post = vertcat(Post,  [currentT cubePos' spherePos']);
       
       if(withinMaxRadius == 0)
           [distsq]  = DistSq( spherePos, cubePos);
@@ -83,14 +78,15 @@ function [Resultat blocf ballef Post]= Devoir3( vbloci,avbloci,tl,vballei )
       end
       
       if(hit == 0)
+          Post = vertcat(Post,  [currentT cubePos' spherePos']);
           currentT = currentT + deltaT;
       else
           currentT = currentT - deltaT;
       end
   end
-  
+  Post = vertcat(Post,  [currentT cubePos' spherePos']);
   %resolution collision
- if(Resultat == 0)
+  if(Resultat == 0)
      [ vfBloc, vfaBloc, vfBalle, vfaBalle] = CollisionImpulsion( normalCollision, cubeV, sphereV, avbloci, cubePos, spherePos, pointCollision, currentT );
      blocf = vertcat([cubeV' avbloci'], [vfBloc' vfaBloc']);
      ballef = vertcat([sphereV' 0 0 0], [vfBalle' vfaBalle']);
