@@ -43,8 +43,6 @@ function [Resultat blocf ballef Post]= Devoir3( vbloci,avbloci,tl,vballei )
       [cubePos cubeV] = gravity(cubePosInit, currentT, cubeSpeedInit);
       
       
-      Post = vertcat(Post,  [currentT cubePos' spherePos']);
-      
       if(withinMaxRadius == 0)
           [distsq]  = DistSq( spherePos, cubePos);
           if(distsq < maxRadiusTotal*maxRadiusTotal)
