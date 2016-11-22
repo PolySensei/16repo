@@ -1,0 +1,37 @@
+
+vT1 = 0;
+vT2 = 300*1000/3600;
+pos1i = [0 0]';
+pos2i = [3000 2000]';
+dir1 = [1 0]';
+dir2 = [-1/sqrt(2) -1/sqrt(2)];
+vitesse1 = vT1 *dir1
+vitesse2 = vT2 *dir2
+temperaturAir = 10;
+c = (331.3 + 0.606 *temperaturAir);
+
+v1base = 120;
+v2base = 170;
+
+for t = 0:100
+    pos1 = pos1i+vitesse1 *t ;
+    pos2 = pos2i + vitesse2 * t;
+
+    deltaTTransmission2 = (pos2-pos1)/(c-vT1)
+        
+    deltaTTransmission1 = (pos1-pos2)/(c-vT1)
+
+
+    u = pos2-pos1;
+    dist = norm(u);
+    u = u/dist;
+
+    v1 = (c - dot(vitesse2,u))/(c- dot(vitesse1,u))*v2base
+    v2 = (c - dot(vitesse2,u))/(c- dot(vitesse1,u))*v1base
+
+    d = dist -10;
+    i1 = d /1000*(0.3+0.005*(v1-100))
+    i2 = d /1000*(0.3+0.005*(v2-100))
+
+
+end
