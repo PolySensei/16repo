@@ -5,7 +5,7 @@ for i = 0:1:100
 end
 
 index = index';
-%{
+
 vT1 = 0;
 vT2 = 300;
 
@@ -46,8 +46,6 @@ freq1 = nuIt1(:, 1)
 int1 = nuIt1(:, 1)
 freq2 = nuIt1(:, 2)
 int2 = nuIt1(:, 2)
-
-%}
 
 
 vT1 = 250;

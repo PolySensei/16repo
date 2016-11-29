@@ -7,7 +7,7 @@ function PlotFigure(x, y1, y2, titre)
      
     
     title(strcat(titre, ' - Fréquence'));
-    legend('Train 1', 'Train 2');
+    legend('Train 1', 'Train 2', 'Location', 'southeast');
     xlim([0 100]);
     
     
@@ -22,7 +22,7 @@ function PlotFigure(x, y1, y2, titre)
      
     
     title(strcat(titre, ' - Intensité'));
-    legend('Train 1', 'Train 2');
+    legend('Train 1', 'Train 2', 'Location', 'southeast');
     xlim([0 100]);
     
     
