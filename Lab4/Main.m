@@ -15,9 +15,9 @@ PlotFigure(index, nuIt1, nuIt2, 'Première Situation');
 
 fprintf('Situation 1')
 freq1 = nuIt1(:, 1)
-int1 = nuIt1(:, 1)
-freq2 = nuIt1(:, 2)
-int2 = nuIt1(:, 2)
+int1 = nuIt1(:, 2)
+freq2 = nuIt2(:, 1)
+int2 = nuIt2(:, 2)
 
 
 vT1 = 250;
@@ -29,9 +29,9 @@ PlotFigure(index, nuIt1, nuIt2, 'Deuxième Situation');
 
 fprintf('Situation 2')
 freq1 = nuIt1(:, 1)
-int1 = nuIt1(:, 1)
-freq2 = nuIt1(:, 2)
-int2 = nuIt1(:, 2)
+int1 = nuIt1(:, 2)
+freq2 = nuIt2(:, 1)
+int2 = nuIt2(:, 2)
 
 
 vT1 = 250;
@@ -43,9 +43,9 @@ PlotFigure(index, nuIt1, nuIt2, 'Troisième Situation');
 
 fprintf('Situation 3')
 freq1 = nuIt1(:, 1)
-int1 = nuIt1(:, 1)
-freq2 = nuIt1(:, 2)
-int2 = nuIt1(:, 2)
+int1 = nuIt1(:, 2)
+freq2 = nuIt2(:, 1)
+int2 = nuIt2(:, 2)
 
 
 vT1 = 250;
@@ -57,6 +57,6 @@ PlotFigure(index, nuIt1, nuIt2, 'Quatrième Situation');
 
 fprintf('Situation 4')
 freq1 = nuIt1(:, 1)
-int1 = nuIt1(:, 1)
-freq2 = nuIt1(:, 2)
-int2 = nuIt1(:, 2)
+int1 = nuIt1(:, 2)
+freq2 = nuIt2(:, 1)
+int2 = nuIt2(:, 2)
